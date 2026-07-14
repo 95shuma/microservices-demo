@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package inventory;
+
+option java_multiple_files = true;
+option java_package = "com.example.inventory.grpc";
+option java_outer_classname = "InventoryProto";
+
+service InventoryService {
+  // Attempts to reserve (decrement) stock for a single SKU.
+  // Returns approved=false instead of an error when stock is insufficient,
+  // so callers can branch on business outcome without exception handling.
+  rpc ReserveStock (ReserveStockRequest) returns (ReserveStockResponse);
+
+  // Reads current available quantity for a SKU (Redis-cached in the server).
+  rpc GetStock (GetStockRequest) returns (GetStockResponse);
+}
+
+message ReserveStockRequest {
+  string sku = 1;
+  int32 quantity = 2;
+  string order_id = 3;
+}
+
+message ReserveStockResponse {
+  bool approved = 1;
+  string reason = 2;
+  int32 remaining_quantity = 3;
+}
+
+message GetStockRequest {
+  string sku = 1;
+}
+
+message GetStockResponse {
+  string sku = 1;
+  int32 available_quantity = 2;
+}
