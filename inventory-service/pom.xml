@@ -46,6 +46,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-grpc-server</artifactId>
 		</dependency>
+		<!--
+			spring-kafka's JsonSerializer/JsonDeserializer are built on classic
+			Jackson 2 (com.fasterxml.jackson.databind), not the Jackson 3
+			(tools.jackson) stack Spring Boot 4 defaults to. This service has
+			no REST layer needing Jackson 3, so classic Jackson 2 is pulled in
+			directly rather than via spring-boot-starter-json.
+		-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.19.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-kafka</artifactId>

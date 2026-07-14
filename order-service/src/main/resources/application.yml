@@ -28,9 +28,9 @@ spring:
 
   grpc:
     client:
-      channels:
+      channel:
         inventory:
-          address: static://${INVENTORY_SERVICE_HOST:localhost}:${INVENTORY_SERVICE_GRPC_PORT:9091}
+          target: static://${INVENTORY_SERVICE_HOST:localhost}:${INVENTORY_SERVICE_GRPC_PORT:9091}
 
 management:
   endpoints:
